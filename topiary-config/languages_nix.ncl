@@ -13,6 +13,9 @@
     openscad = {
       extensions = ["scad"],
       grammar.source.path = "@openscad@",
+    java = {
+      extensions = ["java"],
+      grammar.source.path = "@java@",
     },
 
     json = {

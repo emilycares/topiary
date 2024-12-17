@@ -42,6 +42,7 @@ parallel = [ "dep:rayon" ]
 
 bash = []
 css = []
+java = []
 json = []
 nickel = []
 ocaml = []
@@ -58,6 +59,7 @@ tree_sitter_query = []
 all = [
   "bash",
   "css",
+  "java",
   "json",
   "nickel",
   "ocaml",

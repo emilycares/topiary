@@ -49,6 +49,8 @@ function toMode(language: string) {
     switch (language) {
         case "bash":
             return "sh";
+        case "java":
+            return "java";
         case "json":
             return "json";
         case "ocaml":
