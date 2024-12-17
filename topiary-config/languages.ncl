@@ -18,6 +18,14 @@
       },
     },
 
+    java = {
+      extensions = ["java"],
+      grammar.source.git = {
+        git = "https://github.com/tree-sitter/tree-sitter-java.git",
+        rev = "a1bbe92a6370bb4c15386735fbda12f2b812a923",
+      },
+    },
+
     json = {
       extensions = [
         "json",

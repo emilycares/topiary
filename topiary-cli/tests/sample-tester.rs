@@ -20,6 +20,7 @@ fn get_file_extension(language: &str) -> &str {
         "toml" => "toml",
         "tree_sitter_query" => "scm",
         "wit" => "wit",
+        "java" => "java",
         _ => panic!("Invalid language input: {language}"),
     }
 }
@@ -93,6 +94,7 @@ mod test_fmt {
         "toml",
         "tree_sitter_query",
         "wit",
+        "java"
         fmt_input
     );
 
