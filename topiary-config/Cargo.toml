@@ -43,6 +43,7 @@ parallel = [ "dep:rayon" ]
 
 bash = []
 css = []
+java = []
 json = []
 nickel = []
 ocaml = []
@@ -60,6 +61,7 @@ wit = []
 all = [
   "bash",
   "css",
+  "java",
   "json",
   "nickel",
   "ocaml",
