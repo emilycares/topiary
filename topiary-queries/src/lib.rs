@@ -10,6 +10,12 @@ pub fn css() -> &'static str {
     include_str!("../queries/css.scm")
 }
 
+/// Returns the Topiary-compatible query file for Java.
+#[cfg(feature = "java")]
+pub fn java() -> &'static str {
+    include_str!("../queries/java.scm")
+}
+
 /// Returns the Topiary-compatible query file for Json.
 #[cfg(feature = "json")]
 pub fn json() -> &'static str {

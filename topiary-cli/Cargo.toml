@@ -70,11 +70,13 @@ contributed = [
 
 # Excluded by default
 experimental = [
-  "rust"
+  "rust",
+  "java",
 ]
 
 bash = ["topiary-config/bash", "topiary-queries/bash"]
 css = ["topiary-config/css", "topiary-queries/css"]
+java = ["topiary-config/java", "topiary-queries/java"]
 json = ["topiary-config/json", "topiary-queries/json"]
 nickel = ["topiary-config/nickel", "topiary-queries/nickel"]
 ocaml = ["topiary-config/ocaml", "topiary-queries/ocaml"]
