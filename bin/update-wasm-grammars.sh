@@ -35,6 +35,19 @@ repo_for_language() {
   echo "$CONFIG" | jq -r ".languages.$1.grammar.git"
 }
 
+java() {
+  echo -e "${BLUE}JAVA: Fetching${NC}"
+  REPO=$(repo_for_language "java")
+  git clone "${REPO}" "${WORKDIR}/tree-sitter-java" &> /dev/null
+  REV=$(ref_for_language "java")
+  pushd "${WORKDIR}/tree-sitter-java" &> /dev/null
+    git checkout "$REV" &> /dev/null
+  popd &> /dev/null
+  echo -e "${ORANGE}JAVA: Building${NC}"
+  tree-sitter build --wasm "${WORKDIR}/tree-sitter-java"
+  echo -e "${GREEN}JAVA: Done${NC}"
+}
+
 json() {
   echo -e "${BLUE}JSON: Fetching${NC}"
   REPO=$(repo_for_language "json")
@@ -154,6 +167,6 @@ css() {
 }
 
 
-(trap 'kill 0' SIGINT; json & nickel & ocaml & ocamllex & bash & rust & toml & tree-sitter-query & css & wait)
+(trap 'kill 0' SIGINT; java & json & nickel & ocaml & ocamllex & bash & rust & toml & tree-sitter-query & css & wait)
 
 echo -e "${GREEN}Done! All grammars have been updated${NC}"

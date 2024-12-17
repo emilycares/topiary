@@ -72,6 +72,9 @@ fn input_output_tester() {
     #[cfg(feature = "css")]
     io_test("css.css");
 
+    #[cfg(feature = "java")]
+    io_test("java.java");
+
     #[cfg(feature = "json")]
     io_test("json.json");
 
@@ -109,6 +112,9 @@ fn coverage_tester() {
 
     #[cfg(feature = "json")]
     coverage_test("json.json");
+
+    #[cfg(feature = "java")]
+    coverage_test("java.java");
 
     #[cfg(feature = "nickel")]
     coverage_test("nickel.ncl");

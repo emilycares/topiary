@@ -125,6 +125,7 @@ in
     useNixConfiguration = ''
       bash="${pkgs.tree-sitter-grammars.tree-sitter-bash}/parser" \
       css="${pkgs.tree-sitter-grammars.tree-sitter-css}/parser" \
+      java="${pkgs.tree-sitter-grammars.tree-sitter-java}/parser" \
       json="${pkgs.tree-sitter-grammars.tree-sitter-json}/parser" \
       nickel="${tree-sitter-nickel}/parser" \
       ocaml="${pkgs.tree-sitter-grammars.tree-sitter-ocaml}/parser" \

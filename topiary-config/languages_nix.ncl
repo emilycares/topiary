@@ -10,6 +10,11 @@
       grammar.source.path = "@css@",
     },
 
+    java = {
+      extensions = ["java"],
+      grammar.source.path = "@java@",
+    },
+
     json = {
       extensions = [
         "json",
