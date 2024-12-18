@@ -65,6 +65,39 @@
  (type_identifier)
 ] @prepend_space @append_space
 
+
+(variable_declarator "=" @prepend_space @append_space)
+
+(binary_expression
+  [
+   "+"
+   "-"
+   "*"
+   "/"
+   "%"
+   "="
+   "+="
+   "-="
+   "*="
+   "/="
+   "%="
+   "&="
+   "|="
+   "^="
+   ">>="
+   "<<="
+   "=="
+   "!="
+   ">"
+   "<"
+   ">="
+   "<="
+   "&&"
+   "||"
+   "!"
+  ] @prepend_space @append_space
+)
+
 (return_statement "return" @append_space)
 
 [
