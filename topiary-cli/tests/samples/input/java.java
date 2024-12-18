@@ -15,6 +15,7 @@ public class Test {
     @Huh
     @HuhProp("")
     public String test() {
+        String b="a"+"c">2;
         return "a";
     }
 }
