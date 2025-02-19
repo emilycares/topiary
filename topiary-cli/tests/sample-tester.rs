@@ -91,7 +91,7 @@ mod test_fmt {
         "sdml",
         "toml",
         "tree_sitter_query",
-        "java"
+        "java",
         fmt_input
     );
 
