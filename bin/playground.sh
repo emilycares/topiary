@@ -72,7 +72,7 @@ format() {
 
   (( skip_idempotence )) && topiary_args+=(--skip-idempotence)
 
-  cargo run "${cargo_args[@]}" -- fmt "${topiary_args[@]}" < "${input}"
+  cargo run "${cargo_args[@]}" -- format --skip-idempotence "${input}"
 }
 
 idempotency() {
