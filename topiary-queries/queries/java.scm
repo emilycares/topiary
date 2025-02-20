@@ -3,6 +3,9 @@
   (import_declaration)
   (class_declaration)
   (expression_statement)
+  (local_variable_declaration)
+  (for_statement)
+  (enhanced_for_statement)
 ] @allow_blank_line_before
 
 (package_declaration "package" @append_space)
@@ -21,6 +24,29 @@
   .
 )
 
+(interface_body
+  .
+  "{" @append_hardline @append_indent_start @prepend_space
+  (_)
+  "}" @prepend_hardline @prepend_indent_end @append_hardline
+  .
+)
+(interface_declaration "interface" @prepend_space @append_space)
+(
+  (block_comment) @append_hardline
+  .
+  [
+    (method_declaration)
+    (interface_declaration)
+    (class_declaration)
+    (package_declaration)
+    (constructor_declaration)
+  ]
+)
+
+(method_declaration (throws) @prepend_space)
+(throws "throws" @append_space)
+
 (method_declaration
   (block
     .
@@ -30,6 +56,18 @@
     .
   )
 )
+
+(constructor_declaration
+  body: (constructor_body
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end @append_hardline
+    .
+  )
+)
+
+(constructor_declaration name: (identifier) @prepend_space)
 
 (for_statement
   (block
@@ -51,6 +89,87 @@
   )
 )
 
+(if_statement "if" @append_space)
+(if_statement
+  consequence: (block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end
+    .
+  )
+)
+(if_statement
+  alternative: (block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end @append_hardline
+    .
+  )
+)
+(if_statement
+  consequence: (block "}") @append_spaced_softline
+  alternative: (block)? @do_nothing
+)
+(if_statement "else" @prepend_space)
+
+(while_statement "while" @append_space)
+(while_statement
+  body: (block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end @append_hardline
+    .
+  )
+)
+
+(do_statement
+  body: (block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end
+    .
+  )
+)
+(do_statement "while" @prepend_space @append_space) @append_hardline
+
+(try_statement (catch_clause "catch" @prepend_space @append_space) )
+(try_statement (finally_clause "finally") @prepend_space)
+(try_statement
+  body: (block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end
+    .
+  )
+)
+(try_statement
+  (catch_clause
+    body: (block
+      .
+      "{" @append_hardline @append_indent_start @prepend_space
+      (_)
+      "}" @prepend_hardline @prepend_indent_end @append_hardline
+      .
+    )
+  )
+)
+(try_statement
+  (finally_clause
+    (block
+      .
+      "{" @append_hardline @append_indent_start @prepend_space
+      (_)
+      "}" @prepend_hardline @prepend_indent_end @append_hardline
+      .
+    )
+  )
+)
+
 (lambda_expression
   (block
     .
@@ -65,9 +184,14 @@
 [
   (field_declaration ";")
   (expression_statement ";")
+] @append_spaced_softline
+
+[
   (marker_annotation)
   (annotation)
-] @append_spaced_softline
+] @append_hardline
+
+(local_variable_declaration (modifiers) @append_space)
 
 (_
   (local_variable_declaration ";") @append_spaced_scoped_softline
@@ -99,24 +223,21 @@
 ; Format arguments
 (argument_list "," @append_space)
 (formal_parameters "," @append_space)
-
-; Input softlines before and after all comments. This means that the input
-; decides if a comment should have line breaks before or after. A line comment
-; always ends with a line break.
-[
-  (block_comment)
-  (line_comment)
-] @prepend_input_softline
+(throws "," @append_space)
 
 [
   "static"
-] @prepend_space @append_space
+  "final"
+] @append_space
 
 (method_declaration
   type: [
     (type_identifier)
     (generic_type)
     (integral_type)
+    (boolean_type)
+    (array_type)
+    (void_type)
   ] @prepend_space @append_space
 )
 (field_declaration
@@ -124,6 +245,8 @@
     (type_identifier)
     (generic_type)
     (integral_type)
+    (boolean_type)
+    (array_type)
   ] @prepend_space @append_space
 )
 (local_variable_declaration
@@ -131,6 +254,8 @@
     (type_identifier)
     (generic_type)
     (integral_type)
+    (boolean_type)
+    (array_type)
   ] @append_space
 )
 (formal_parameter
@@ -138,6 +263,8 @@
     (type_identifier)
     (generic_type)
     (integral_type)
+    (boolean_type)
+    (array_type)
   ] @append_space
 )
 (enhanced_for_statement
@@ -145,11 +272,26 @@
     (type_identifier)
     (generic_type)
     (integral_type)
+    (boolean_type)
+    (array_type)
   ] @append_space
 )
-(for_statement ";" @append_antispace)
 (enhanced_for_statement ":" @prepend_space @append_space)
 (variable_declarator "=" @prepend_space @append_space)
+
+(assignment_expression
+  [
+    "="
+    "+="
+    "-="
+    "*="
+    "/="
+    "%="
+    "&="
+    "|="
+    "^="
+  ] @prepend_space @append_space
+)
 
 (binary_expression
   [
@@ -182,6 +324,7 @@
 )
 
 (return_statement "return" @append_space)
+(throw_statement "throw" @append_space)
 
 [
   ","
@@ -190,3 +333,5 @@
 ] @prepend_antispace
 
 (object_creation_expression "new" @append_space)
+
+(assignment_expression "=" @prepend_space @append_space)
