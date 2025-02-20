@@ -11,6 +11,9 @@
 (package_declaration "package" @append_space)
 (import_declaration "import" @append_space)
 
+(superclass "extends" @prepend_space @append_space)
+(super_interfaces "implements" @prepend_space @append_space)
+(type_list "," @append_space)
 (class_declaration (modifiers) @append_space)
 (class_declaration "class" @append_space)
 (class_declaration (identifier) @append_space)
@@ -32,6 +35,7 @@
   .
 )
 (interface_declaration "interface" @prepend_space @append_space)
+(line_comment) @append_hardline
 (
   (block_comment) @append_hardline
   .
@@ -136,7 +140,7 @@
 )
 (do_statement "while" @prepend_space @append_space) @append_hardline
 
-(try_statement (catch_clause "catch" @prepend_space @append_space) )
+(try_statement (catch_clause "catch" @prepend_space @append_space))
 (try_statement (finally_clause "finally") @prepend_space)
 (try_statement
   body: (block
@@ -225,10 +229,7 @@
 (formal_parameters "," @append_space)
 (throws "," @append_space)
 
-[
-  "static"
-  "final"
-] @append_space
+(modifiers ["static" "final"] @prepend_space @append_space)
 
 (method_declaration
   type: [
