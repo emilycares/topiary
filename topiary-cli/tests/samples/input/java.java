@@ -12,7 +12,8 @@ public class GreetingResource {
 
   private class HIhi {}
 
-  private static Long other;
+  @Get
+  Long other;
 
   @GET
   @Produces(MediaType.TEXT_HTML)
@@ -21,8 +22,7 @@ public class GreetingResource {
     List<String> names = List.of("a", "b");
     for(int i = 0; i < 5;i++) {
       for(String name : names) {
-        names
-            .stream().map((n) -> {
+        names.stream().map((n) -> {
           return n + "_";
         });
       }
