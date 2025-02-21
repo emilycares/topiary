@@ -6,6 +6,7 @@
   (local_variable_declaration)
   (for_statement)
   (enhanced_for_statement)
+  (if_statement)
 ] @allow_blank_line_before
 
 (package_declaration "package" @append_space)
@@ -82,6 +83,8 @@
     .
   )
 )
+(for_statement "for" @append_space)
+(for_statement ";" @append_space)
 
 (enhanced_for_statement
   (block
@@ -277,6 +280,7 @@
     (array_type)
   ] @append_space
 )
+(enhanced_for_statement "for" @append_space)
 (enhanced_for_statement ":" @prepend_space @append_space)
 (variable_declarator "=" @prepend_space @append_space)
 
