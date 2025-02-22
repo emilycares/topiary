@@ -7,6 +7,7 @@
   (for_statement)
   (enhanced_for_statement)
   (if_statement)
+  (constant_declaration)
 ] @allow_blank_line_before
 
 (package_declaration "package" @append_space)
@@ -36,6 +37,11 @@
   .
 )
 (interface_declaration "interface" @prepend_space @append_space)
+(constant_declaration
+  (modifiers) @append_space
+  (type_identifier) @append_space
+) @append_hardline
+
 (line_comment) @append_hardline
 (
   (block_comment) @append_hardline
@@ -44,9 +50,21 @@
     (method_declaration)
     (interface_declaration)
     (class_declaration)
+    (enum_declaration)
     (package_declaration)
     (constructor_declaration)
+    (constant_declaration)
   ]
+)
+
+(enum_declaration "enum" @prepend_space @append_space)
+(enum_body "," @append_hardline)
+(enum_body
+  .
+  "{" @append_hardline @append_indent_start @prepend_space
+  (_)
+  "}" @prepend_hardline @prepend_indent_end @append_hardline
+  .
 )
 
 (method_declaration (throws) @prepend_space)
