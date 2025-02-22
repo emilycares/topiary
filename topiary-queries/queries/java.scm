@@ -39,8 +39,11 @@
 (interface_declaration "interface" @prepend_space @append_space)
 (constant_declaration
   (modifiers) @append_space
-  (type_identifier) @append_space
-) @append_hardline
+)
+(constant_declaration
+  type: (type_identifier) @append_space
+)
+(constant_declaration) @append_hardline
 
 (line_comment) @append_hardline
 (
