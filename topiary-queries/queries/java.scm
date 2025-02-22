@@ -1,6 +1,8 @@
 ; Allow blank line before
 [
   (import_declaration)
+  (interface_declaration)
+  (enum_declaration)
   (class_declaration)
   (expression_statement)
   (local_variable_declaration)
@@ -11,6 +13,7 @@
 ] @allow_blank_line_before
 
 (package_declaration "package" @append_space)
+(package_declaration) @append_hardline
 (import_declaration "import" @append_space)
 
 (superclass "extends" @prepend_space @append_space)
