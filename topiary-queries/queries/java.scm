@@ -14,12 +14,27 @@
 
 (package_declaration "package" @append_space)
 (package_declaration) @append_hardline
-(import_declaration "import" @append_space)
+(import_declaration
+  [
+    "import"
+    "static"
+  ] @append_space
+)
 
 (superclass "extends" @prepend_space @append_space)
 (super_interfaces "implements" @prepend_space @append_space)
 (type_list "," @append_space)
-(class_declaration (modifiers) @append_space)
+(class_declaration (modifiers) @prepend_space @append_space)
+(modifiers
+  [
+    "public"
+    "private"
+    "protected"
+    "abstract"
+    "final"
+  ] @append_space
+)
+(modifiers ["static"] @prepend_space @append_space)
 (class_declaration "class" @append_space)
 (class_declaration (identifier) @append_space)
 
@@ -120,7 +135,7 @@
   )
 )
 
-(if_statement "if" @append_space)
+(if_statement ["if" "else"] @append_space)
 (if_statement
   consequence: (block
     .
@@ -141,9 +156,22 @@
 )
 (if_statement
   consequence: (block "}") @append_spaced_softline
-  alternative: (block)? @do_nothing
+  alternative: [
+    (block)
+    (if_statement)
+  ]? @do_nothing
 )
 (if_statement "else" @prepend_space)
+
+; (condition
+;   "(" @append_begin_scope @append_empty_softline @append_indent_start
+;   ")" @append_end_scope @prepend_empty_softline @prepend_indent_end
+;   (#scope_id! "if_newline")
+; )
+; (condition
+;   "," @append_spaced_scoped_softline
+;   (#scope_id! "if_newline")
+; )
 
 (while_statement "while" @append_space)
 (while_statement
@@ -178,17 +206,16 @@
     .
   )
 )
-(try_statement
-  (catch_clause
-    body: (block
-      .
-      "{" @append_hardline @append_indent_start @prepend_space
-      (_)
-      "}" @prepend_hardline @prepend_indent_end @append_hardline
-      .
-    )
+(catch_clause
+  body: (block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end
+    .
   )
 )
+
 (try_statement
   (finally_clause
     (block
@@ -200,6 +227,27 @@
     )
   )
 )
+(try_with_resources_statement
+  body: (block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end
+    .
+  )
+)
+(resource_specification
+  "(" @append_begin_scope @append_empty_softline @append_indent_start
+  ")" @append_end_scope @prepend_empty_softline @prepend_indent_end
+  (#scope_id! "resource_specification")
+)
+(resource_specification
+  (resource)
+  .
+  ";" @append_spaced_scoped_softline
+  (#scope_id! "resource_specification")
+)
+(resource "=" @prepend_space @append_space)
 
 (lambda_expression
   (block
@@ -211,6 +259,20 @@
   )
 )
 (lambda_expression "->" @prepend_space @append_space)
+
+(switch_expression
+  (switch_block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end
+    .
+  )
+)
+(switch_label "case" @append_space)
+(labeled_statement) @append_hardline
+(switch_block_statement_group) @append_hardline
+(labeled_statement ":" @append_space)
 
 [
   (field_declaration ";")
@@ -251,12 +313,31 @@
   (block_comment)
 ] @allow_blank_line_before
 
+(argument_list
+  "(" @append_begin_scope @append_empty_softline @append_indent_start
+  ")" @append_end_scope @prepend_empty_softline @prepend_indent_end
+  (#scope_id! "arguments")
+)
+(argument_list
+  "," @append_spaced_scoped_softline
+  (#scope_id! "arguments")
+)
+
+(formal_parameters
+  "(" @append_begin_scope @append_empty_softline @append_indent_start
+  ")" @append_end_scope @prepend_empty_softline @prepend_indent_end
+  (#scope_id! "form_params")
+)
+(formal_parameters
+  "," @append_spaced_scoped_softline
+  (#scope_id! "form_params")
+)
+
 ; Format arguments
 (argument_list "," @append_space)
 (formal_parameters "," @append_space)
 (throws "," @append_space)
-
-(modifiers ["static" "final"] @prepend_space @append_space)
+(type_arguments "," @append_space)
 
 (method_declaration
   type: [
@@ -278,6 +359,15 @@
   ] @prepend_space @append_space
 )
 (local_variable_declaration
+  type: [
+    (type_identifier)
+    (generic_type)
+    (integral_type)
+    (boolean_type)
+    (array_type)
+  ] @append_space
+)
+(resource
   type: [
     (type_identifier)
     (generic_type)
@@ -320,6 +410,48 @@
     "|="
     "^="
   ] @prepend_space @append_space
+)
+
+(binary_expression
+  (#scope_id! "bin_expr")
+) @prepend_begin_scope @append_end_scope
+(binary_expression
+  [
+    "+"
+    "-"
+    "*"
+    "/"
+    "%"
+    "="
+    "+="
+    "-="
+    "*="
+    "/="
+    "%="
+    "&="
+    "|="
+    "^="
+    ">>="
+    "<<="
+    "=="
+    "!="
+    ">"
+    "<"
+    ">="
+    "<="
+    "&&"
+    "||"
+    "!"
+  ] @prepend_spaced_scoped_softline
+  (#scope_id! "bin_expr")
+)
+
+(method_invocation
+  (#scope_id! "invoca")
+) @prepend_begin_scope @append_end_scope
+(method_invocation
+  "." @prepend_spaced_scoped_softline
+  (#scope_id! "invoca")
 )
 
 (binary_expression
