@@ -218,6 +218,8 @@
 )
 
 (try_statement) @append_hardline
+(try_statement "try" @append_space)
+(try_with_resources_statement "try" @append_space)
 (try_with_resources_statement) @append_hardline
 (try_statement
   (finally_clause
