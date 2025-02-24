@@ -10,6 +10,7 @@
   (enhanced_for_statement)
   (if_statement)
   (constant_declaration)
+  (explicit_constructor_invocation)
 ] @allow_blank_line_before
 
 (package_declaration "package" @append_space)
@@ -89,7 +90,7 @@
 )
 
 (method_declaration (throws) @prepend_space)
-(throws "throws" @append_space)
+(throws "throws" @prepend_space @append_space)
 
 (method_declaration
   (block
@@ -463,6 +464,7 @@
 ;  (#scope_id! "arguments")
 ;)
 
+(explicit_constructor_invocation) @append_hardline
 
 (method_invocation
   "." @prepend_indent_start
