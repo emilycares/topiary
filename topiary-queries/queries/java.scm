@@ -195,7 +195,8 @@
 )
 (do_statement "while" @prepend_space @append_space) @append_hardline
 
-(try_statement (catch_clause "catch" @prepend_space @append_space))
+(catch_clause "catch" @prepend_space @append_space)
+(catch_formal_parameter (catch_type) @append_space)
 (try_statement (finally_clause "finally") @prepend_space)
 (try_statement
   body: (block
@@ -216,6 +217,8 @@
   )
 )
 
+(try_statement) @append_hardline
+(try_with_resources_statement) @append_hardline
 (try_statement
   (finally_clause
     (block
@@ -442,11 +445,26 @@
     "&&"
     "||"
     "!"
-  ] @prepend_spaced_scoped_softline
+  ] @prepend_spaced_scoped_softline @prepend_indent_start
+  right: (_) @append_indent_end
   (#scope_id! "bin_expr")
 )
 
+
+;(argument_list
+;  "(" @append_begin_scope @append_empty_softline @append_indent_start
+;  ")" @append_end_scope @prepend_empty_softline @prepend_indent_end
+;  (#scope_id! "arguments")
+;)
+;(argument_list
+;  "," @append_spaced_scoped_softline
+;  (#scope_id! "arguments")
+;)
+
+
 (method_invocation
+  "." @prepend_indent_start
+  arguments: (argument_list ")" @append_indent_end)
   (#scope_id! "invoca")
 ) @prepend_begin_scope @append_end_scope
 (method_invocation
@@ -494,5 +512,7 @@
 ] @prepend_antispace
 
 (object_creation_expression "new" @append_space)
+(array_creation_expression "new" @append_space)
+(array_creation_expression (dimensions) @append_space)
 
 (assignment_expression "=" @prepend_space @append_space)
