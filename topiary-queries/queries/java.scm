@@ -404,20 +404,6 @@
 (enhanced_for_statement ":" @prepend_space @append_space)
 (variable_declarator "=" @prepend_space @append_space)
 
-(assignment_expression
-  [
-    "="
-    "+="
-    "-="
-    "*="
-    "/="
-    "%="
-    "&="
-    "|="
-    "^="
-  ] @prepend_space @append_space
-)
-
 (binary_expression
   (#scope_id! "bin_expr")
 ) @prepend_begin_scope @append_end_scope
@@ -477,33 +463,12 @@
 )
 
 (binary_expression
-  [
-    "+"
-    "-"
-    "*"
-    "/"
-    "%"
-    "="
-    "+="
-    "-="
-    "*="
-    "/="
-    "%="
-    "&="
-    "|="
-    "^="
-    ">>="
-    "<<="
-    "=="
-    "!="
-    ">"
-    "<"
-    ">="
-    "<="
-    "&&"
-    "||"
-    "!"
-  ] @prepend_space @append_space
+  left: (_) @append_space
+  right: (_) @prepend_space
+)
+(assignment_expression
+  left: (_) @append_space
+  right: (_) @prepend_space
 )
 
 (return_statement "return" @append_space)
@@ -518,5 +483,3 @@
 (object_creation_expression "new" @append_space)
 (array_creation_expression "new" @append_space)
 (array_creation_expression (dimensions) @append_space)
-
-(assignment_expression "=" @prepend_space @append_space)
