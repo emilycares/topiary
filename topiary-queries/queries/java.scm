@@ -197,8 +197,9 @@
 (do_statement "while" @prepend_space @append_space) @append_hardline
 
 (catch_clause "catch" @prepend_space @append_space)
+(catch_type "|" @prepend_space @append_space)
 (catch_formal_parameter (catch_type) @append_space)
-(try_statement (finally_clause "finally") @prepend_space)
+(finally_clause "finally" @prepend_space @append_space)
 (try_statement
   body: (block
     .
@@ -222,15 +223,13 @@
 (try_statement "try" @append_space)
 (try_with_resources_statement "try" @append_space)
 (try_with_resources_statement) @append_hardline
-(try_statement
-  (finally_clause
-    (block
-      .
-      "{" @append_hardline @append_indent_start @prepend_space
-      (_)
-      "}" @prepend_hardline @prepend_indent_end @append_hardline
-      .
-    )
+(finally_clause
+  (block
+    .
+    "{" @append_hardline @append_indent_start @prepend_space
+    (_)
+    "}" @prepend_hardline @prepend_indent_end @append_hardline
+    .
   )
 )
 (try_with_resources_statement
