@@ -344,6 +344,8 @@
 (throws "," @append_space)
 (type_arguments "," @append_space)
 
+(type_arguments (wildcard "extends" @prepend_space @append_space))
+
 (method_declaration
   type: [
     (type_identifier)
